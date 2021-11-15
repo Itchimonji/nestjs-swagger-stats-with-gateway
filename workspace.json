@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "projects": {
+    "wine-maker": "apps/wine-maker"
+  }
+}

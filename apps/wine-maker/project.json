@@ -1,0 +1,52 @@
+{
+  "root": "apps/wine-maker",
+  "sourceRoot": "apps/wine-maker/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/wine-maker",
+        "main": "apps/wine-maker/src/main.ts",
+        "tsConfig": "apps/wine-maker/tsconfig.app.json",
+        "assets": ["apps/wine-maker/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/wine-maker/src/environments/environment.ts",
+              "with": "apps/wine-maker/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "wine-maker:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/wine-maker/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/wine-maker"],
+      "options": {
+        "jestConfig": "apps/wine-maker/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
