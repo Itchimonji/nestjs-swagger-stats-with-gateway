@@ -15,6 +15,7 @@
     "@nestjs/swagger": "^5.1.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.6.3",
+    "swagger-stats": "^0.99.2",
     "swagger-ui-express": "^4.1.6",
     "tslib": "^2.0.0"
   },
