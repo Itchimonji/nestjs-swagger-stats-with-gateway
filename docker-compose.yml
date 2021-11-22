@@ -1,8 +1,8 @@
-version: "3.8"
+version: "3.9"
 
 networks:
-  corp:
-    driver: bridge
+  default:
+    name: kong-net
 
 services:
   image-service:
@@ -16,14 +16,20 @@ services:
         NODE_ENV: "development"
         BUILD_FLAG: ""
     image: image-service:nx-dev
+    hostname: image-service
     ports:
-      - 3333:3333
+      - "3333:3333"
     environment:
       NODE_ENV: "development"
       PORT: 3333
     networks:
-      - corp
+      - default
     restart: on-failure
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3333/swagger-stats/metrics" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
 
   wine-maker:
     container_name: wine-maker
@@ -36,11 +42,37 @@ services:
         NODE_ENV: "development"
         BUILD_FLAG: ""
     image: wine-maker:nx-dev
+    hostname: wine-maker
     ports:
-      - 3334:3334
+      - "3334:3334"
     environment:
       NODE_ENV: "development"
       PORT: 3334
     networks:
-      - corp
+      - default
     restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3334/swagger-stats/metrics"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+  kong:
+    container_name: kong
+    image: kong:2.5.0-alpine
+    hostname: kong
+    environment:
+      KONG_DATABASE: 'off'
+      KONG_PROXY_ACCESS_LOG: '/dev/stdout'
+      KONG_ADMIN_ACCESS_LOG: '/dev/stdout'
+      KONG_PROXY_ERROR_LOG: '/dev/stderr'
+      KONG_ADMIN_ERROR_LOG: '/dev/stderr'
+      KONG_ADMIN_LISTEN: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
+      KONG_DECLARATIVE_CONFIG: "/opt/kong/.config.yaml"
+    command: "kong start"
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
+    volumes:
+      - ./kong:/opt/kong

@@ -1,0 +1,16 @@
+_format_version: "2.1"
+_transform: true
+
+services:
+  - name: image-service
+    url: http://image-service:3333
+    routes:
+      - name: image-service
+        paths:
+          - /image-service
+  - name: wine-maker
+    url: http://wine-maker:3334
+    routes:
+      - name: wine-maker
+        paths:
+          - /wine-maker
