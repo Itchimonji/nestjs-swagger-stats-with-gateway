@@ -15,13 +15,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
-  const port = process.env.PORT_WINE_MAKER || 3334;
+  const port = process.env.PORT_IMAGE_SERVICE || 3333;
 
   const config = new DocumentBuilder()
-    .setTitle('Wine Maker API')
-    .setDescription('API for made wine')
+    .setTitle('Image Service API')
+    .setDescription('API for host images')
     .setVersion('1.0')
-    .addTag('production')
+    .addTag('image')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

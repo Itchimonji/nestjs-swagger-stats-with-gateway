@@ -9,7 +9,7 @@ export class ProductionController {
   constructor(private readonly productionService: ProductionService) {}
 
   @Get('data')
-  @ApiOperation({ summary: 'Get production data of wine' })
+  @ApiOperation({ summary: 'Get image data of wine' })
   @ApiResponse({
     status: 200,
     description: 'The found record',

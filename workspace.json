@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "image-service": "apps/image-service",
     "wine-maker": "apps/wine-maker"
   }
 }

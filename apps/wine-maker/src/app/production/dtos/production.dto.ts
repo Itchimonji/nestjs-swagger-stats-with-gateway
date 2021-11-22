@@ -5,9 +5,9 @@ export class ProductionDto {
   id: string;
   @ApiProperty({ example: 'Pflaume', description: 'Type of wine' })
   type: string;
-  @ApiProperty({ example: 'Pflaumenweinherstellung', description: 'Title of production' })
+  @ApiProperty({ example: 'Pflaumenweinherstellung', description: 'Title of image' })
   title: string;
-  @ApiProperty({ example: 'Zwetschgenwein', description: 'Description of production' })
+  @ApiProperty({ example: 'Zwetschgenwein', description: 'Description of image' })
   description: string;
   @ApiProperty({ example: '31.10.2021', description: 'Time record of harvest' })
   harvested: string | null;
@@ -21,7 +21,7 @@ export class ProductionDto {
   constructor() {
     this.id = '-1';
     this.type = '';
-    this.title = 'New production entry';
+    this.title = 'New image entry';
     this.description = '';
     this.harvested = null;
     this.fementStart = null;
