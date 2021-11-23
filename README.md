@@ -29,7 +29,7 @@ https://docs.konghq.com/gateway/
 https://hub.docker.com/_/kong
 ```
 
-### What speaks for Kong (Pro)
+### What speaks for Kong
 - Easy to integrate into an existing system (e.g., db-less mode)
 - No changes to existing services necessary
 - Extendable with various plugins like Rate-limiting, OAuth 2.0, CORS, GraphQL Proxy Caching, and so on..
