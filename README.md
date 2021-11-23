@@ -80,3 +80,9 @@ $ http://localhost:8000/wine-maker/api/#
 - Kong config file: `./kong/.config.yaml`
 
 [![Kong](https://img.youtube.com/vi/sJEID1xEZMg/0.jpg)](https://www.youtube.com/watch?v=sJEID1xEZMg)
+
+# What speaks for Kong (Pro)
+- Easy to integrate into an existing system (e.g., db-less mode)
+- No changes to existing services necessary
+- Extendable with various plugins like Rate-limiting, OAuth 2.0, CORS, GraphQL Proxy Caching, and so on..
+- Easy to monitor with Datadog, Prometheus, and so on..
