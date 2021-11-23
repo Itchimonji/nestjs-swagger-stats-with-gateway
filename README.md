@@ -47,6 +47,10 @@ $ nx serve wine-maker
 
 # Docker Instruction
 
+I have used Docker-Compose here to show in a simple way how to integrate 
+Kong into your existing microservice landscape. You don't  need to change any existing
+service to integrate Kong into your system.
+
 [Docker-Compose File](./docker-compose.yml)
 
 ## Run local instances
