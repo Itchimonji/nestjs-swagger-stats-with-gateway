@@ -14,3 +14,10 @@ services:
       - name: wine-maker
         paths:
           - /wine-maker
+
+plugins:
+  - name: rate-limiting
+    service: image-service
+    config:
+      minute: 6 # The number of HTTP requests that can be made per minute
+      policy: local

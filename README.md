@@ -1,4 +1,4 @@
-# Default Information about used Frameworks
+# NestJs, Swagger, Swagger Stats and Kong Gateway
 
 ## NestJs Swagger Documentation
 The OpenAPI specification is a language-agnostic definition format used to describe RESTful APIs. 
@@ -28,6 +28,80 @@ https://konghq.com/
 https://docs.konghq.com/gateway/
 https://hub.docker.com/_/kong
 ```
+
+### What speaks for Kong (Pro)
+- Easy to integrate into an existing system (e.g., db-less mode)
+- No changes to existing services necessary
+- Extendable with various plugins like Rate-limiting, OAuth 2.0, CORS, GraphQL Proxy Caching, and so on..
+- Configurable via declarative config file, K8s definition, or API administration (e.g., POST methods to push config)
+- Easy to monitor with Datadog, Prometheus, and so on..
+
+### Configuration example
+This example shows a declarative configuration for a service integrated behind Kong
+
+```
+_format_version: "2.1"
+_transform: true
+
+services:
+  - name: image-service
+    url: http://image-service:3333
+    routes:
+      - name: image-service
+        paths:
+          - /image-service
+```
+
+### Plugin example (Rate limiting)
+Link: https://docs.konghq.com/hub/kong-inc/rate-limiting/
+
+```
+plugins:
+  - name: rate-limiting
+    service: image-service
+    config:
+      minute: 6 # The number of HTTP requests that can be made per minute
+      policy: local
+```
+
+### Docker-Compose example
+
+```
+kong:
+  container_name: kong
+  image: kong:2.5.0-alpine
+  hostname: kong
+  environment:
+    KONG_DATABASE: 'off'
+    KONG_PROXY_ACCESS_LOG: '/dev/stdout'
+    KONG_ADMIN_ACCESS_LOG: '/dev/stdout'
+    KONG_PROXY_ERROR_LOG: '/dev/stderr'
+    KONG_ADMIN_ERROR_LOG: '/dev/stderr'
+    KONG_ADMIN_LISTEN: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
+    KONG_DECLARATIVE_CONFIG: "/opt/kong/.config.yaml"
+  command: "kong start"
+  ports:
+    - "8000:8000"
+    - "8443:8443"
+    - "8001:8001"
+    - "8444:8444"
+  volumes:
+    - ./kong:/opt/kong
+```
+
+## How Kong works in this project
+
+- Kong is running in database-less mode (no Postgres or Cassandra is needed), so you configure Kong Gateway declaratively
+- The Admin API is mostly read-only
+- Kong configuration endpoint: `http://localhost:8001/`
+- Kong service configuration endpoint: `http://localhost:8001/services`
+- kong default route: `http://localhost:8000`
+- Service endpoints through Gateway:
+```
+$ http://localhost:8000/image-service/api/#
+$ http://localhost:8000/wine-maker/api/#
+```
+- Kong config file: `./kong/.config.yaml`
 
 # NestJs Installation & Run
 
@@ -65,24 +139,4 @@ docker build . -t base-image:nx-base
 docker-compose build
 ```
 
-# Description
-## How Kong works in here
-
-- Kong is running in database-less mode (no Postgres or Cassandra is needed)
-- Kong configuration endpoint: `http://localhost:8001/`
-- Kong service configuration endpoint: `http://localhost:8001/services`
-- kong default route: `http://localhost:8000`
-- Service endpoints through Gateway:
-```
-$ http://localhost:8000/image-service/api/#
-$ http://localhost:8000/wine-maker/api/#
-```
-- Kong config file: `./kong/.config.yaml`
-
 [![Kong](https://img.youtube.com/vi/sJEID1xEZMg/0.jpg)](https://www.youtube.com/watch?v=sJEID1xEZMg)
-
-# What speaks for Kong (Pro)
-- Easy to integrate into an existing system (e.g., db-less mode)
-- No changes to existing services necessary
-- Extendable with various plugins like Rate-limiting, OAuth 2.0, CORS, GraphQL Proxy Caching, and so on..
-- Easy to monitor with Datadog, Prometheus, and so on..
