@@ -1,3 +1,9 @@
+# Blog Post Related to the Repository
+
+Link: https://medium.com/cp-massive-programming/gateway-pattern-introduction-on-the-bases-of-kong-gateway-e788e8c5662f
+
+[![Medium](https://docs.konghq.com/assets/images/docs/gateway/gateway_overview.png)](https://medium.com/cp-massive-programming/gateway-pattern-introduction-on-the-bases-of-kong-gateway-e788e8c5662f)
+
 # NestJs, Swagger, Swagger Stats and Kong Gateway
 
 ## NestJs Swagger Documentation
